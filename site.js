@@ -1,30 +1,11 @@
 (() => {
   "use strict";
-  const plans = { start: { name: "Start", cents: 1900, members: 100, admins: 3 }, team: { name: "Team", cents: 3900, members: 300, admins: 5 }, verband: { name: "Verband", cents: 6900, members: 1000, admins: 10 } };
-  const euro = (cents) => new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" }).format(cents / 100);
-  const mailto = (subject, message) => `mailto:mail@bestitgmbh.de?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
-  const contact = (node, subject, message) => node.setAttribute("href", mailto(subject, message));
-  document.querySelectorAll(".contact-link").forEach((node) => contact(node, node.dataset.subject, node.dataset.message));
-  document.querySelectorAll(".plan-contact").forEach((node) => contact(node, `Vereinslio ${node.dataset.plan}`, `Ich interessiere mich für den Tarif ${node.dataset.plan}. Bitte kontaktieren Sie mich für eine Demo.`));
-  const form = document.getElementById("calculator-form");
-  const result = document.getElementById("calculator-result");
-  const calculatorContact = document.getElementById("calculator-contact");
-  const update = () => {
-    const plan = plans[form.elements.plan.value] || plans.start;
-    const memberBlocks = Math.min(90, Math.max(0, Number(form.elements.members.value) || 0));
-    const adminSeats = Math.min(90, Math.max(0, Number(form.elements.admins.value) || 0));
-    form.elements.members.value = memberBlocks;
-    form.elements.admins.value = adminSeats;
-    const members = plan.members + memberBlocks * 100;
-    const admins = plan.admins + adminSeats;
-    const price = plan.cents + memberBlocks * 900 + adminSeats * 300;
-    result.innerHTML = `${plan.name}: bis zu ${members.toLocaleString("de-DE")} Mitglieder und ${admins} Verwaltungszugänge · <strong>${euro(price)} brutto / Monat</strong>`;
-    contact(calculatorContact, `Vereinslio ${plan.name} – Konfiguration`, `Ich interessiere mich für folgende Vereinslio-Konfiguration:\n\nTarif: ${plan.name}\nMitglieder: bis zu ${members}\nVerwaltungszugänge: ${admins}\nPreis: ${euro(price)} brutto / Monat\n\nBitte kontaktieren Sie mich für eine Demo.`);
-  };
-  form?.addEventListener("input", update);
-  form?.addEventListener("change", update);
-  update();
+
   const nav = document.getElementById("hauptnav");
   const toggle = document.querySelector(".menu-toggle");
-  toggle?.addEventListener("click", () => { const open = nav.classList.toggle("open"); toggle.setAttribute("aria-expanded", String(open)); });
+
+  toggle?.addEventListener("click", () => {
+    const open = nav.classList.toggle("open");
+    toggle.setAttribute("aria-expanded", String(open));
+  });
 })();
